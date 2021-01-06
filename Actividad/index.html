@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+    <!-- Js scripts -->
+    <script src="character.js"></script>
+    <script src="gameMaster.js"></script>
+    <script src="front-end.js"></script>
+    <script type="application/javascript">
+      // carga de botones y sus funcionalidad en el evento onload
+      window.onload = function() {
+        let jugador, enemigo;
+
+        let generarPersonajeBtn = document.querySelector(".generar-personaje-btn");
+        generarPersonajeBtn.onclick = function() {
+          jugador = createPlayer();
+        }
+
+        let generarEnemigoBtn = document.querySelector(".generar-enemigo-btn");
+        generarEnemigoBtn.onclick = function() {
+          enemigo = createEnemy();
+        }
+
+        let combateBtn = document.querySelector(".combate-btn");
+        combateBtn.onclick = function() {
+          combate(jugador, enemigo);
+        }
+
+        let levelUpBtn = document.querySelector(".level-up-btn");
+        levelUpBtn.onclick = function() {
+          levelUp(jugador);
+        }
+
+        let keepGoingBtn = document.querySelector(".keep-going-btn");
+        keepGoingBtn.onclick = function() {
+          enemigo = keepGoing(jugador, enemigo);
+        }
+
+      }
+    </script>
+
+    <title>Introducción a la programación y Desarrollo de videojuegos</title>
+  </head>
+  <body>
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+    <!-- Here we go -->
+    <div class="container text-center mb-5">
+      <p class="h2">Introducción a la programación y Desarrollo de videojuegos</p>
+      <p class="h4">Objetos en JavaScript</p>
+    </div>
+
+    <div class="container">
+
+      <div class="container-fluid row row-cols-lg-auto g-3">
+
+        <!-- funcionalidad de generación aleatoria del personaje -->
+        <div class="col-12">
+          <div class="card p-3 mb-5" style="width: 20rem; height: 18rem">
+            <div class="card-body">
+              <h5 class="card-title">Generaci&oacute;n de un personaje</h5>
+              <h6 class="card-subtitle mb-2 text-muted">C&oacute;mo generar un personaje</h6>
+              <p class="card-text text-justify">Haga click en el bot&oacute;n Generar personaje. Los atributos ser&aacute;n generados por el Game Master de forma aleatoria.</p>
+              <button type="button" class="btn btn-outline-primary generar-personaje-btn">Generar personaje</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- funcionalidad de generación aleatoria del oponente -->
+        <div class="col-12">
+          <div class="card p-3 mb-5" style="width: 20rem; height: 18rem">
+            <div class="card-body">
+              <h5 class="card-title">Generaci&oacute;n de un enemigo</h5>
+              <h6 class="card-subtitle mb-2 text-muted">C&oacute;mo generar un oponente</h6>
+              <p class="card-text text-justify">Haga click en el bot&oacute;n Generar enemigo y el Game Master generar&aacute; un enemigo para su personaje.</p>
+              <button type="button" class="btn btn-outline-danger generar-enemigo-btn">Generar enemigo</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- funcionalidad de combate -->
+        <div class="col-12">
+          <div class="card p-3 mb-5" style="width: 20rem; height: 18rem">
+            <div class="card-body">
+              <h5 class="card-title">Combate</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Cooombaaateeee</h6>
+              <p class="card-text text-justify">Haz click en el bot&oacute;n de combate y que empieze la diversi&oacute;n.</p>
+              <button type="button" class="btn btn-outline-dark combate-btn">Es la hora de las tortas!</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Detalles del personaje del jugador y su oponente -->
+      <div class="container-fluid row row-cols-lg-auto g-3">
+
+        <div class="col-12">
+          <div class="card p-3 mb-5" style="width: 20rem;">
+            <div class="card-body">
+              <h5 class="card-title">Hoja del personaje</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Los detalles de tu personaje</h6>
+              <p class="card-text text-justify jugador-nombre"></p>
+              <p class="card-text text-justify jugador-profesion"></p>
+              <p class="card-text text-justify jugador-atributos"></p>
+              <p class="card-text text-justify jugador-nivel"></p>
+              <p class="card-text text-justify jugador-vida"></p>
+              <p class="card-text text-justify jugador-experiencia"></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="card p-3 mb-5" style="width: 20rem;">
+            <div class="card-body">
+              <h5 class="card-title">Hoja del oponente</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Los detalles de tu oponente</h6>
+              <p class="card-text text-justify enemigo-nombre"></p>
+              <p class="card-text text-justify enemigo-profesion"></p>
+              <p class="card-text text-justify enemigo-atributos"></p>
+              <p class="card-text text-justify enemigo-nivel"></p>
+              <p class="card-text text-justify enemigo-vida"></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Detalles del resultado del combate -->
+        <div class="col-12">
+          <div class="card p-3 mb-5" style="width: 32rem;">
+            <div class="card-body">
+              <h5 class="card-title">Resultados del combate</h5>
+              <h6 class="card-subtitle mb-2 text-muted">La hora de las tortas, aqu&iacute;!</h6>
+              <p class="card-text text-justify resumen-combate"></p>
+              <p class="card-text text-justify resultado-combate"></p>
+              <button type="button" class="btn btn-outline-success d-none level-up-btn">Level Up</button>
+              <button type="button" class="btn btn-outline-success d-none keep-going-btn">Continuar</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </body>
+</html>
